@@ -10,6 +10,7 @@ build/
 *.obj
 
 # Служебные файлы редакторов
+git_push_with_key.sh
 .vscode/
 *.swp
 *~
