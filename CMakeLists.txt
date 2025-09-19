@@ -37,7 +37,7 @@ file(GLOB_RECURSE SOURCES
 include_directories(
     FreeRTOS
     FreeRTOS/include
-    FreeRTOS/portable/GCC/ARM_CM3/
+    FreeRTOS/portable/GCC/ARM_CM3
     inc
     cmsis
     ld
@@ -53,7 +53,7 @@ target_compile_options(${PROJECT_NAME}.elf PRIVATE
     -mcpu=cortex-m3
     -mthumb
     -Wall
-    -O1              
+    -Og        
     -g
     -ffreestanding
 )

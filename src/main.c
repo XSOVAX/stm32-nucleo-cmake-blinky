@@ -30,6 +30,7 @@ void vApplicationTickHook(void) {
 }
 
 
+
 int main( void ) {
   
   SystemInit();
@@ -40,7 +41,9 @@ int main( void ) {
 
   while( 1 ) {  } 
 }
-
+// RTOS View для обработки процессорного времени
+// смотри xPortSysTickHandler переменная работает там
+volatile uint32_t ulHighFrequencyTimerTicks = 0;
 
 void vBlinkTask(void *pvParameters) {
 
@@ -49,6 +52,7 @@ void vBlinkTask(void *pvParameters) {
   GPIOA->CRL |= GPIO_CRL_MODE5_1 | GPIO_CRL_MODE5_0;
 
   for (;;) {
+    for( uint32_t time = 0; time < 0xFFFF; time++ ) { __NOP(); }
     GPIOA->ODR ^= GPIO_ODR_ODR5;
     vTaskDelay(pdMS_TO_TICKS(500));
   }

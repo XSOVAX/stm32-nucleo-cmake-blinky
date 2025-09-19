@@ -5,91 +5,70 @@
 
 extern uint32_t SystemCoreClock;
 
-// Приоритеты прерываний
-#define configKERNEL_INTERRUPT_PRIORITY         255  // Низший приоритет (STM32)
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY    16   // Максимальный приоритет для безопасных вызовов
+
+#define configKERNEL_INTERRUPT_PRIORITY         255  
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY    10
 
 #define configCPU_CLOCK_HZ                    	SystemCoreClock
 #define configTICK_RATE_HZ                    	( TickType_t ) 	( 1000 ) 
 
-// Пример для STM32F103C8 (20 KB SRAM)
+
 #define configTOTAL_HEAP_SIZE          			( size_t ) 			( 18 * 1024 )  // 16 KB
 
-#define configUSE_MALLOC_FAILED_HOOK				1	// проверка хватает ли кучи
+#define configUSE_MALLOC_FAILED_HOOK			0
 #define configMINIMAL_STACK_SIZE              	( unsigned short ) 128 
-#define configCHECK_FOR_STACK_OVERFLOW				1	// 0 - нет проверки на переполнение
-																	// 1 - легкая проверка с небольшим влиянием на производительность
-																	// 2 - мощная проверка с доп возможностями с влиянием на производительность
+#define configCHECK_FOR_STACK_OVERFLOW			0
 	
-#define configUSE_IDLE_HOOK                     1
-#define configUSE_TICK_HOOK                     1
-#define configSUPPORT_STATIC_ALLOCATION       	0
-#define configSUPPORT_DYNAMIC_ALLOCATION      	1	// динамическое выделение памяти
-
-#define config_LOWEST_INTERRUPT_PRIORITY			15 // Низший приоритет прерываний
-#define config_MAX_SYSCALL_INTERRUPT_PRIORITY	10 // Максимальный, который можно использовать совместно с RTOS 
-																	// из которого безопасно вызываются FromISR функции внутри обработчиков прерываний
+#define configUSE_IDLE_HOOK                     0
+#define configUSE_TICK_HOOK                     0
+#define configSUPPORT_DYNAMIC_ALLOCATION      	1
+#define configSUPPORT_STATIC_ALLOCATION			0
+#define config_LOWEST_INTERRUPT_PRIORITY		12 
+#define config_MAX_SYSCALL_INTERRUPT_PRIORITY	10 
 
 #define configMAX_PRIORITIES                  	5
 #define configMAX_TASK_NAME_LEN               	16
 #define configUSE_16_BIT_TICKS                	0
 #define configIDLE_SHOULD_YIELD               	1
-#define configUSE_MUTEXES                     	0	// 1 для использования механизма мьютексов
+#define configUSE_MUTEXES                     	0	
 #define configUSE_RECURSIVE_MUTEXES           	0
-#define configUSE_COUNTING_SEMAPHORES         	0	// 1 для использования функционала счетных семафоров
-#define configUSE_QUEUE                      	1	// 1 для использования функционала очередей
-#define configUSE_TIMERS                      	1	// 1 для использования функционала таймеров
+#define configUSE_COUNTING_SEMAPHORES         	0	
+#define configUSE_QUEUE                      	1
+#define configUSE_TIMERS                      	0
 #define configTIMER_TASK_PRIORITY             	2
 #define configTIMER_QUEUE_LENGTH              	10
 #define configTIMER_TASK_STACK_DEPTH          	100
-#define configEXPECTED_IDLE_TIME_BEFORE_SLEEP	5	// константа для Tickless idle  говорит о количестве тиков простоя что бы уйти в сон
-																	// (те если планировщик будет видет простой в этом количестве раз тиков он уйдет в сон)
-#define configUSE_TICKLESS_IDLE						0	// 0 Tickless idle не используется
-																	//	1 используется строенная реализации  функции portSUPPRESS_TICKS_AND_SLEEP()
-																	// 2 используется пользовательская реализация portSUPPRESS_TICKS_AND_SLEEP()
-#define configUSE_TASK_NOTIFICATIONS				1 	// Функциональность уведомлений о задачах
-/*
-Конфигурация "приоритетов планирования"
-Не предотвращается изменение приоритета задач
-По появлении задачи с более высоким приоритетом переведет выполняющуюся задачу в состояние "ГОТОВА" и отдаст время более важной задаче.
-С каждым квантом все равно будет переход на следующую задачу
-*/
-//#define configUSE_PREEMPTION               		1
-//#define configUSE_TIME_SLICING              		1
-/*
-Конфигурация "упреждающее планирование"
-Дает возможность закончится задаче если задачи с одинаковым приоритетом, или осуществит переключение если появилась задача с большим приоритетом
-Нет квантования времени, задачи переключаются реже, возможно выделение разного времени для задач одинакового приоритета
-Более продвинутый уровень
-*/
-//#define configUSE_PREEMPTION               		1
-//#define configUSE_TIME_SLICING              		0
+#define configEXPECTED_IDLE_TIME_BEFORE_SLEEP	5	
+#define configUSE_TICKLESS_IDLE					0	
+#define configUSE_TASK_NOTIFICATIONS			1
 
-/*
-Конфигурация "кооперативная многозадачность"
-Дает возможность совместного планирования
-Переключнение происходит только при явном переходе задачи в состояние "заблокировано" или или с помощью вызова передачи taskYIELD()
-Используется что бы предотвратить использования одного и того же ресурса или переферии одновременно несколькими задачами
-*/
 #define configUSE_PREEMPTION               		0
-#define configUSE_TIME_SLICING              		0 // или 1
+#define configUSE_TIME_SLICING              	0 
 
 
 
-// для vTaskGetRunTimeStats что бы собирать статистику по задачам
-//#define configGENERATE_RUN_TIME_STATS				1	
-//#define configUSE_STATS_FORMATTING_FUNCTIONS 		1
-//#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS 	1	// конфигурация программной переферии
+// vTaskGetRunTimeStats 
+
+#define configUSE_TRACE_FACILITY            	1
+#define configUSE_STATS_FORMATTING_FUNCTIONS 	1
+#define configRECORD_STACK_HIGH_ADDRESS			1 // RTOS View СЃРєРѕР»СЊРєРѕ СЃС‚РµРєР° РѕСЃС‚Р°Р»РѕСЃСЊ
+#define configGENERATE_RUN_TIME_STATS 			1 // Rtos View РїРѕРєР°Р·С‹РІР°С‚СЊ РїСЂРѕС†РµРЅС‚ РІСЂРµРјРµРЅРё CPU, РєРѕС‚РѕСЂРѕРµ РєР°Р¶РґР°СЏ Р·Р°РґР°С‡Р° РёСЃРїРѕР»СЊР·РѕРІР°Р»Р°
+#define configQUEUE_REGISTRY_SIZE 				10
+
+// РСЃРїРѕР»СЊР·СѓРµРј SysTick РєР°Рє РёСЃС‚РѕС‡РЅРёРє РґР»СЏ runtime stats
+
+extern volatile uint32_t ulHighFrequencyTimerTicks;
+
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() (ulHighFrequencyTimerTicks = 0)
+#define portGET_RUN_TIME_COUNTER_VALUE() ulHighFrequencyTimerTicks
 
 
 
 
-
-
-
-#define INCLUDE_vTaskDelay 							1	// Включаем vTaskDelay
-//#define INCLUDE_vTaskPrioritySet        		1	// для управления приоритетами
-//#define INCLUDE_uxTaskPriorityGet       		1	// что бы посмотреть приоритет
+#define INCLUDE_vTaskDelay 						1	
+#define INCLUDE_xTaskDelayUntil					1
+//#define INCLUDE_vTaskPrioritySet        		1	
+//#define INCLUDE_uxTaskPriorityGet       		1	
 //#define INCLUDE_vTaskCleanUpResources   		0
 //#define INCLUDE_vTaskSuspend             		1
 //#define INCLUDE_xTaskGetSchedulerState   		0
