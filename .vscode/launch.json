@@ -7,7 +7,7 @@
             "request": "launch",
             "servertype": "openocd",
             "cwd": "${workspaceFolder}",
-            "executable": "./build/stm32f103rb_cmsis_blinky.elf",
+            "executable": "${workspaceFolder}/build/stm32f103rb_cmsis_blinky.elf",
             "device": "STM32F103RB",
             "configFiles": [
                 "interface/stlink.cfg",
@@ -16,7 +16,7 @@
             "svdFile": "${workspaceFolder}/cmsis/STM32F103xx.svd",
             "runToMain": true,
             "preLaunchTask": "CMake Build",
-            "rtos": "FreeRTOS"
+            "rtos": "FreeRTOS",
         }
     ]
 }

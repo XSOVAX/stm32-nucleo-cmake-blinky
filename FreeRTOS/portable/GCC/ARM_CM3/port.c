@@ -764,6 +764,18 @@ __attribute__( ( weak ) ) void vPortSetupTimerInterrupt( void )
 
 #endif /* configASSERT_DEFINED */
 // ������������� ��������� ����������� ����� ������������ � FreeRTOS
+/*
 void SVC_Handler(void) __attribute__((alias("vPortSVCHandler")));
 void PendSV_Handler(void) __attribute__((alias("xPortPendSVHandler")));
 void SysTick_Handler(void) __attribute__((alias("xPortSysTickHandler")));
+*/
+
+void SVC_Handler(void) {
+
+}
+void PendSV_Handler(void) {
+
+}
+void SysTick_Handler(void) {
+
+}

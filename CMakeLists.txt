@@ -56,14 +56,11 @@ target_compile_options(${PROJECT_NAME}.elf PRIVATE
     -O1              
     -g
     -ffreestanding
-    -fno-builtin 
 )
-
 # Флаги линковки
 target_link_options(${PROJECT_NAME}.elf PRIVATE
     -T${LINKER_SCRIPT}
-    -Wl,--verbose
-    --specs=nosys.specs 
+    -nostdlib
     -nostartfiles 
     -lgcc           
     -Wl,--gc-sections
