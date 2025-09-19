@@ -15,7 +15,8 @@
             ],
             "svdFile": "${workspaceFolder}/cmsis/STM32F103xx.svd",
             "runToMain": true,
-            "preLaunchTask": "CMake Build"
+            "preLaunchTask": "CMake Build",
+            "rtos": "FreeRTOS"
         }
     ]
 }

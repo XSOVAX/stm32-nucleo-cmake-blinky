@@ -4,7 +4,9 @@
             "name": "STM32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/cmsis"
+                "${workspaceFolder}/cmsis",
+                "${workspaceFolder}/freertos/Source/include",
+                "${workspaceFolder}/freertos/portable/ARMv8M/non_secure/portable/GCC/ARM_CM23"
             ],
             "defines": [
                 "STM32F103xB"

@@ -11,6 +11,7 @@ build/
 
 # Служебные файлы редакторов
 git_push_with_key.sh
+git_push_only.sh
 *.swp
 *~
 .DS_Store

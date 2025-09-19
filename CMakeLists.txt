@@ -21,8 +21,13 @@ if(NOT CMAKE_SIZE_UTIL)
     message(FATAL_ERROR "arm-none-eabi-size not found!")
 endif()
 
+
+
 # Явно указываем исходники
 file(GLOB_RECURSE SOURCES
+    "FreeRTOS/*.c"
+    "FreeRTOS/portable/GCC/ARM_CM3/port.c"
+    "FreeRTOS/portable/MemMang/heap_4.c"
     "src/*.c"
     "cmsis/startup_stm32f103xb.s"
     "cmsis/system_stm32f1xx.c"
@@ -30,6 +35,9 @@ file(GLOB_RECURSE SOURCES
 
 # Указываем пути для заголовков
 include_directories(
+    FreeRTOS
+    FreeRTOS/include
+    FreeRTOS/portable/GCC/ARM_CM3/
     inc
     cmsis
     ld
@@ -41,12 +49,23 @@ add_executable(${PROJECT_NAME}.elf ${SOURCES})
 # Указываем линкер-скрипт
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/ld/STM32F103RB_FLASH.ld)
 
+target_compile_options(${PROJECT_NAME}.elf PRIVATE
+    -mcpu=cortex-m3
+    -mthumb
+    -Wall
+    -O1              
+    -g
+    -ffreestanding
+    -fno-builtin 
+)
 
 # Флаги линковки
 target_link_options(${PROJECT_NAME}.elf PRIVATE
     -T${LINKER_SCRIPT}
-    -nostdlib
-    -lgcc
+    -Wl,--verbose
+    --specs=nosys.specs 
+    -nostartfiles 
+    -lgcc           
     -Wl,--gc-sections
     -Wl,-Map=${PROJECT_NAME}.map
 )

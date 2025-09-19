@@ -1,11 +1,10 @@
-# 🚀 STM32F103RB CMSIS Blinky Project (Nucleo-F103RB)
+# STM32F103RB CMSIS + FreeRTOS Blinky Project
 
-> **Цель**: Мигание светодиодом на PA5 с использованием CMSIS, CMake и скриптов для автоматической сборки/прошивки.  
-> **Платформа**: Nucleo-F103RB (STM32F103RB)  
-> **Язык**: C (bare-metal)  
-> **Сборка**: CMake + GNU Arm Embedded Toolchain  
-> **Прошивка**: `st-flash` через ST-Link  
-> **ОС**: Linux (Manjaro, Ubuntu), macOS (через Homebrew)
+> Мигание светодиодом на плате Nucleo-F103RB (STM32F103RB) через PA5  
+> Сборка: CMake + GNU Arm Embedded Toolchain  
+> Прошивка: `st-flash` или OpenOCD через ST-Link  
+> RTOS: FreeRTOS V10.5.1 — с поддержкой отладки в VSCode (RTOS View)  
+> Поддержка: Linux (Manjaro, Ubuntu), macOS
 
 ---
 
@@ -25,8 +24,20 @@ stm32-nucleo-cmake-blinky/
 │   ├── system_stm32f1xx.c
 │   ├── system_stm32f1xx.h
 │   └── startup_stm32f103xb.s
-└── src/
-    └── main.c                 ← 💡 Код — мигание PA5
+├── FreeRTOS/                  # Ядро FreeRTOS v10.5.1
+│   ├── croutine.c
+│   ├── event_groups.c
+│   ├── include/
+│   ├── list.c
+│   ├── portable/
+│   │   ├── GCC/ARM_CM3/
+│   │   └── MemMang/
+│   ├── queue.c
+│   ├── stream_buffer.c
+│   ├── tasks.c
+│   └── timers.c
+├── main.c                 # Код: мигание через FreeRTOS задачу
+└── memcpy.c               # Реализация memcpy/memset для FreeRTOS
 ```
 ---
 
@@ -35,6 +46,7 @@ stm32-nucleo-cmake-blinky/
 | Компонент | Назначение | Откуда взялся |
 |----------|------------|----------------|
 | **CMSIS** | Стандарт ARM для Cortex-M — заголовки, startup, системные функции | [ARM-software/CMSIS_5](https://github.com/ARM-software/CMSIS_5) (вручную скопированы нужные файлы) |
+| **FreeRTOS** | Минимальный набор файлов для работ RTOS, создание задач и их обслуживания | Официальные исходники FreeRTOS |
 | **startup_stm32f103xb.s** | Вектор прерываний, инициализация стека, переход на `main` | Взят из примеров ST / CMSIS, адаптирован под bare-metal |
 | **system_stm32f1xx.c** | Реализация `SystemInit()` — настройка тактирования на 72 МГц | CMSIS, официальный файл от ST |
 | **STM32F103RB_FLASH.ld** | Линкер-скрипт — распределение памяти (Flash 128K, RAM 20K) | Написан вручную на основе Reference Manual |
@@ -145,4 +157,5 @@ make flash
 - STM32F1 Reference Manual: RM0008
 - GNU Arm Embedded Toolchain: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain 
 - stlink: https://github.com/stlink-org/stlink 
+- FreeRTOS: https://www.freertos.org
      

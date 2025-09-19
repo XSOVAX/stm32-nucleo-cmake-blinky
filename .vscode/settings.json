@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "*.cpp": "cpp",
+        "freertosconfig.h": "c",
+        "freertos.h": "c",
+        "portable.h": "c",
+        "task.h": "c",
+        "string.h": "c"
+    }
+}
