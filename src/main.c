@@ -3,6 +3,9 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+// RTOS View для обработки процессорного времени
+// смотри xPortSysTickHandler переменная работает там
+volatile uint32_t ulHighFrequencyTimerTicks = 0;
 
 
 void vBlinkTask(void *pvParameters);
@@ -30,21 +33,16 @@ void vApplicationTickHook(void) {
 }
 
 
-
 int main( void ) {
   
-  SystemInit();
+ SystemInit();
 
   xTaskCreate( vBlinkTask, "blink", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL );
 
   vTaskStartScheduler();
 
-  while( 1 ) {  } 
+  while( 1 ) {  }
 }
-// RTOS View для обработки процессорного времени
-// смотри xPortSysTickHandler переменная работает там
-volatile uint32_t ulHighFrequencyTimerTicks = 0;
-
 void vBlinkTask(void *pvParameters) {
 
   RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;

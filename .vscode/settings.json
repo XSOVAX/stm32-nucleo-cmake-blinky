@@ -9,8 +9,13 @@
         "cortex-debug.armToolchainPath": "/usr/bin",
         "cortex-debug.openocdPath": "/usr/bin/openocd",
         "cortex-debug.stlinkPath": "/usr/bin"
+    },
+    "cortex-debug.variableUseNaturalFormat": false,
+    {
+        "editor.formatOnSave": true,
+        "C_Cpp.formatting": "clangFormat",
+        "C_Cpp.clang_format_style": "file",
+        "C_Cpp.clang_format_fallbackStyle": "LLVM"
     }
-    
-    
     
 }
